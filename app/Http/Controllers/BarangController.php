@@ -60,9 +60,16 @@ class BarangController extends Controller
         $barang->jenis_varian = $jenis_varian;
         $barang->qty = $qty;
         $barang->harga_jual = $harga_jual;
+        $barang->total_harga = $total_harga;
+        $barang->potongan_harga = $potongan_harga;
+        $barang->potongan_harga = $persentase_potongan;
+        $barang->harga_bayar = $harga_bayar;
         $barang->save();
 
-        return view('hasil_barang', compact(
+        $barangs = Barang::all();
+            return view('hasil_barang', compact('barangs'));
+
+        /*return view('hasil_barang', compact(
             'kode_barang',
             'nama_barang',
             'jenis_varian',
@@ -72,7 +79,7 @@ class BarangController extends Controller
             'potongan_harga',
             'persentase_potongan',
             'harga_bayar'
-        ));
+        ));*/
     }
 
     public function semuaBarang()
@@ -94,7 +101,9 @@ class BarangController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $barangs = Barang::findOrFail($id);
+        
+        return view('update_barang', compact('barangs'));
     }
 
     /**
@@ -102,7 +111,12 @@ class BarangController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $barangs = Barang::findOrFail($id);
+
+        $barangs->update($request->all());
+
+        $barangs = Barang::all();
+        return view('hasil_barang', compact('barangs'));
     }
 
     /**

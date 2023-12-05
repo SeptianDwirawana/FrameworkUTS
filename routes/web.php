@@ -17,3 +17,6 @@ use App\Http\Controllers\BarangController;
 
 Route::get('/input_barang', [BarangController::class, 'index']);
 Route::post('/proses_barang', [BarangController::class, 'store']);
+
+Route::get('/edit/{id}', [BarangController::class, 'edit'])->name('edit');
+Route::put('/update/{id}', [BarangController::class, 'update'])->name('update');

@@ -16,5 +16,8 @@ class Barang extends Model
         'jenis_varian',
         'qty',
         'harga_jual',
+        'total_harga',
+        'potongan_harga',
+        'harga_bayar',
     ];
 }

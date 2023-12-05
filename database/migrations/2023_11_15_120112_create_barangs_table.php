@@ -19,6 +19,9 @@ return new class extends Migration
         $table->string('jenis_varian');
         $table->string('qty');
         $table->string('harga_jual');
+        $table->string('total_harga');
+        $table->string('potongan_harga');
+        $table->string('harga_bayar');
     });
 }
 
