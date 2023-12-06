@@ -35,7 +35,7 @@
                         placeholder="Harga Jual">
                 </div>
                 <button type="submit" class="btn btn-primary me-2">Proses</button>
-                <button class="btn btn-light">Cancel</button>
+                <a href="{{ route('show') }}" type="button" class="btn btn-light">Batal</a>
             </form>
         </div>
     </div>

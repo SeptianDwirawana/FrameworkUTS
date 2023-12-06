@@ -15,8 +15,12 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\BarangController;
 
-Route::get('/input_barang', [BarangController::class, 'index']);
+Route::get('/input_barang', [BarangController::class, 'index'])->name('input');
 Route::post('/proses_barang', [BarangController::class, 'store']);
+
+Route::get('/show', [BarangController::class, 'show'])->name('show');
 
 Route::get('/edit/{id}', [BarangController::class, 'edit'])->name('edit');
 Route::put('/update/{id}', [BarangController::class, 'update'])->name('update');
+
+Route::get('/delete/{id}', [BarangController::class, 'destroy'])->name('delete');

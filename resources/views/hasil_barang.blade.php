@@ -79,11 +79,13 @@
                           <td class="align-middle">
                             <div class="btn-group" role="group" aria-label="Basic example">
                             <a href="{{ route('edit', $a->id) }}" type="button" class="btn btn-info">Edit</a>
-                            <button class="btn btn-danger m-0">Hapus</button>
+                            <a href="{{ route('delete', $a->id) }}" type="button" class="btn btn-danger">Hapus</a>
                         </tr>
                       </tbody>
                       @endforeach
                     </table>
+                    <br>
+                      <a href="{{ route('input') }}" type="button" class="btn btn-primary">Tambah Barang</a>
                   </div>
                 </div>
               </div>

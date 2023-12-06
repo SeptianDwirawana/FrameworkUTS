@@ -12,6 +12,7 @@ class BarangController extends Controller
      */
     public function index()
     {
+        $barangs = Barang::orderBy('created_at', 'desc')->get();
         return view('input_barang');
     }
 
@@ -91,9 +92,10 @@ class BarangController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        $barangs = Barang::orderBy('kode_barang', 'asc')->get();
+        return view('hasil_barang', compact('barangs'));
     }
 
     /**
@@ -113,7 +115,42 @@ class BarangController extends Controller
     {
         $barangs = Barang::findOrFail($id);
 
-        $barangs->update($request->all());
+        $kode_barang = $request->input('kode_barang');
+        $nama_barang = $request->input('nama_barang');
+        $jenis_varian = $request->input('jenis_varian');
+        $qty = $request->input('qty');
+        $harga_jual = $request->input('harga_jual');
+
+        // Hitung total harga
+        $total_harga = $qty * $harga_jual;
+
+        // Hitung potongan harga
+        $potongan_harga = 0;
+        if ($total_harga >= 500000) {
+            $potongan_harga = 0.5 * $total_harga; // Diskon 50%
+        } elseif ($total_harga >= 200000) {
+            $potongan_harga = 0.2 * $total_harga; // Diskon 20%
+        } elseif ($total_harga >= 100000) {
+            $potongan_harga = 0.1 * $total_harga; // Diskon 10%
+        }
+
+        // Hitung persentase potongan harga
+        $persentase_potongan = ($potongan_harga / $total_harga) * 100;
+
+        // Hitung harga yang harus dibayar
+        $harga_bayar = $total_harga - $potongan_harga;
+
+        // Simpan data ke database
+        $barangs->kode_barang = $kode_barang;
+        $barangs->nama_barang = $nama_barang;
+        $barangs->jenis_varian = $jenis_varian;
+        $barangs->qty = $qty;
+        $barangs->harga_jual = $harga_jual;
+        $barangs->total_harga = $total_harga;
+        $barangs->potongan_harga = $potongan_harga;
+        $barangs->potongan_harga = $persentase_potongan;
+        $barangs->harga_bayar = $harga_bayar;
+        $barangs->save();
 
         $barangs = Barang::all();
         return view('hasil_barang', compact('barangs'));
@@ -124,6 +161,11 @@ class BarangController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $barangs = Barang::findOrFail($id);
+
+        $barangs->delete();
+
+        $barangs = Barang::all();
+        return view('hasil_barang', compact('barangs'));
     } 
 }
